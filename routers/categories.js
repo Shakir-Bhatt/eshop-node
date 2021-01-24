@@ -2,31 +2,83 @@
 const {Category} = require('../models/category');
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
-router.get(`/`, async (req,res)=>{
-    const categoryList = await Product.find();
-    res.send(categoryList)
+/* all categories */
+router.get('/', async (req,res)=>{
+    const categoryList = await Category.find();
+    res.status(200).send(categoryList)
 });
 
-
-router.post(`/create`,(req,res)=>{
-    const category = new Category({
-        name: req.body.name,
-        image: req.body.image,
-        stock: req.body.stock
-    })
+/* create category */
+router.post('/create', async (req,res)=>{
     
-    category.save()
-    .then((createdCategory => {
-        res.status(201).json(createdCategory); 
-    }))
-    .catch((err) => {
-        res.status(500).json({
-            error: err,
-            success: false
-        })
+    let category =  new Category({
+        name: req.body.name,
+        color: req.body.color,
+        icon: req.body.icon
     })
-})
+    category = await category.save();
+    if(category){
+        return res.send(category);
+    } else {
+        return res.status(404).send('Category cannot be created!');
+    }
+});
 
+/* Single category */
+router.get('/:id', (req,res)=>{
+    /* validate id */
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send('Invalid id provided');
+    }
+    Category.findById(req.params.id)
+    .then(category =>{
+        return res.send(category);
+    })
+    .catch(err => {
+        return res.status(400).json({success:false,'message':err});
+    });
+});
+
+/* update category */
+router.put('/update/:id', async (req,res)=>{
+    /* validate id */
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send('Invalid id provided');
+    }
+    const category = await Category.findByIdAndUpdate(req.params.id,{
+        name: req.body.name,
+        icon: req.body.icon,
+        color: req.body.color,
+    },{
+        new: true
+    });
+    
+    if(category){
+        return res.send(category);
+    } else {
+        return res.status(404).send('Category cannot be updated!');
+    }
+});
+
+/* delete category */
+router.delete('/delete/:id', (req,res) =>{
+    /* validate id */
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send('Invalid id provided');
+    }
+    Category.findByIdAndRemove(req.params.id)
+    .then(category =>{
+        if(category){
+            return res.status(200).json({success:true,'message':'Category deleted'});
+        } else {
+            return res.status(404).json({success:false,'message':'Category not found'});
+        }
+    })
+    .catch(err => {
+        return res.status(400).json({success:false,'message':err});
+    });
+})
 
 module.exports = router; 

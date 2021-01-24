@@ -44,6 +44,7 @@ app.listen(3000, ()=>{
 mongoose.connect(process.env.DB_CONNECTION_STRING,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    // useFindAndModify:false
     dbName: process.env.DB_NAME
 })
 .then(() => {
@@ -63,10 +64,10 @@ const ordersRouter = require('./routers/orders');
 
 //================================================================//
 /* Get api uri constant variable from .env file */
-const api = process.env.API_URL;
+const appUrl = process.env.API_URL;
 
-app.use(`${api}/products`,productsRouter);
-app.use(`${api}/categories`,categoriesRouter);
-app.use(`${api}/users`,usersRouter);
-app.use(`${api}/orders`,ordersRouter);
+app.use(`${appUrl}/products`,productsRouter);
+app.use(`${appUrl}/categories`,categoriesRouter);
+app.use(`${appUrl}/users`,usersRouter);
+app.use(`${appUrl}/orders`,ordersRouter);
 

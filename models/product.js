@@ -11,7 +11,7 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    righDescription: {
+    richDescription: {
         type: String,
         default: ''
     },
@@ -59,6 +59,16 @@ const productSchema = mongoose.Schema({
         default: Date.now
     }
 })
+
+/*  To get id in response data without underscore */
+productSchema.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+
+/* When we pass data to api we pass virtuals as well */
+productSchema.set('toJSON',{
+    virtuals: true
+});
 
 /* Model object and export in other files */
 

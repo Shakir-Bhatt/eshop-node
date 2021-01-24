@@ -11,13 +11,9 @@ const categorySchema = mongoose.Schema({
         type: String,
     },
     icon: {
-        type: Number,
+        type: String,
         required: true
     },
-    image: {
-        type: String,
-        default: ''
-    }
 })
 
 /* Model object and export in other files */
