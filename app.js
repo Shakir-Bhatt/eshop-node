@@ -6,6 +6,9 @@
     - body-parser | for fetching/parsing json data from request | middleware
     - morgan | For logging http requests | middleware
     - mongoose | mongodb connection and models
+    - bcryptjs | password hashing
+    - jsonwebtoken | for jwt token
+    - express-jwt | for api token verification | middleware
 */
 
 //================================================================//
@@ -17,6 +20,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const authJwt = require('./helpers/jwt');
+const errorHandler = require('./helpers/error-handler');
 require('dotenv/config');
 
 //================================================================//
@@ -31,6 +36,9 @@ app.options('*',cors());
 /* Middleware section */
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+app.use(authJwt());
+/* For error handling */
+app.use(errorHandler);
 
 //================================================================//
 /* Create server on port 3000 */
@@ -38,13 +46,11 @@ app.listen(3000, ()=>{
     console.log("The serve is running http://localhost:3000");
 });
 
-
 //================================================================//
 /* mongoose for db connection */  
 mongoose.connect(process.env.DB_CONNECTION_STRING,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // useFindAndModify:false
     dbName: process.env.DB_NAME
 })
 .then(() => {
