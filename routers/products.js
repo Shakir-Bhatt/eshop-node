@@ -31,7 +31,7 @@ router.post(`/create`, async (req,res)=>{
     });
     
     if(!category){
-        return res.status(404).send({success:false,'message':'Category is invalid!'});
+        res.status(404).send({success:false,'message':'Category is invalid!'});
     } 
 
     let product = new Product({
@@ -51,9 +51,9 @@ router.post(`/create`, async (req,res)=>{
     
     product = await product.save()
     if(product){
-        return res.status(200).json({success:true,'message':'Product created'});
+        res.status(200).json({success:true,'message':'Product created'});
     } else {
-        return res.status(404).json({success:false,'message':'Product cannot be created!'});
+        res.status(404).json({success:false,'message':'Product cannot be created!'});
     }
     
 });

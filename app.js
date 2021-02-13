@@ -36,9 +36,9 @@ app.options('*',cors());
 /* Middleware section */
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
-app.use(authJwt());
+//app.use(authJwt());
 /* For error handling */
-app.use(errorHandler);
+//app.use(errorHandler);
 
 //================================================================//
 /* Create server on port 3000 */
@@ -67,6 +67,8 @@ const productsRouter = require('./routers/products');
 const categoriesRouter = require('./routers/categories');
 const usersRouter = require('./routers/users');
 const ordersRouter = require('./routers/orders');
+const orderItemsRouter = require('./routers/order-items');
+
 
 //================================================================//
 /* Get api uri constant variable from .env file */
@@ -76,4 +78,6 @@ app.use(`${appUrl}/products`,productsRouter);
 app.use(`${appUrl}/categories`,categoriesRouter);
 app.use(`${appUrl}/users`,usersRouter);
 app.use(`${appUrl}/orders`,ordersRouter);
+app.use(`${appUrl}/order-items`,orderItemsRouter);
+
 

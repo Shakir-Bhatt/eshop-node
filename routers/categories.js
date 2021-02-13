@@ -20,9 +20,9 @@ router.post('/create', async (req,res)=>{
     })
     category = await category.save();
     if(category){
-        return res.send(category);
+        res.send(category);
     } else {
-        return res.status(404).send('Category cannot be created!');
+        res.status(404).send('Category cannot be created!');
     }
 });
 
@@ -54,11 +54,10 @@ router.put('/update/:id', async (req,res)=>{
     },{
         new: true
     });
-    
     if(category){
-        return res.send(category);
+        res.send(category);
     } else {
-        return res.status(404).send('Category cannot be updated!');
+        res.status(404).send('Category cannot be updated!');
     }
 });
 
