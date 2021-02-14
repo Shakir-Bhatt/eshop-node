@@ -9,6 +9,7 @@
     - bcryptjs | password hashing
     - jsonwebtoken | for jwt token
     - express-jwt | for api token verification | middleware
+    - multer | for image uploading and upload file path
 */
 
 //================================================================//
@@ -36,6 +37,9 @@ app.options('*',cors());
 /* Middleware section */
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+// In order to make upladed images accessable directly 
+// we have to make that path static like below
+app.use('/public/uploads',express.static(__dirname + '/public/uploads'));
 //app.use(authJwt());
 /* For error handling */
 //app.use(errorHandler);
