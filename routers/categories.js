@@ -12,7 +12,6 @@ router.get('/', async (req,res)=>{
 
 /* create category */
 router.post('/create', async (req,res)=>{
-    
     let category =  new Category({
         name: req.body.name,
         color: req.body.color,

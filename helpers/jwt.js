@@ -16,7 +16,7 @@ function authJwt(){
                 To handle this situation we use isRevoked option of expressJwt as above
                 to validate if use is admin
              */ 
-            {url: /\/api\/v1\/products(.*)/,method: ['GET','OPTIONS']},
+            {url: /\/api\/v1\/products(.*)/,method: ['GET']},
             {url: /\/api\/v1\/categories(.*)/,method: ['GET','OPTIONS']},
             {url: /\/public\/uploads(.*)/,method: ['GET','OPTIONS']},
 
