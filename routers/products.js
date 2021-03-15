@@ -46,7 +46,7 @@ router.get(`/`, async (req,res)=>{
 });
 
 /* all products with selected colunms */
-router.get(`/columns`, async (req,res)=>{
+router.get(`/columns/:abc`, async (req,res)=>{
     /* filterging */
    const productList = await Product.find().select('name brand price').populate('category');
    res.send(productList)

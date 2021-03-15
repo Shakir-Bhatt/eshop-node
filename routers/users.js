@@ -68,10 +68,15 @@ router.post('/login',async (req,res) => {
     if(user && bcrypt.compareSync(req.body.password ,user.passwordHash)){
 
         const token = jwt.sign(
-                        {  userId: user.id },
+                        {  
+                            userId: user.id,
+                            isAdmin : user.isAdmin 
+                        },
                         process.env.SESSION_SECRET,
-                        { expiresIn: '1d'}
-                        );
+                        { 
+                            expiresIn: '1d'
+                        }
+                    );
         return res.status(200).send({user:user.email,token:token});
     } else {
         return res.status(400).send("Password invalid");
